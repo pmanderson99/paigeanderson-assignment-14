@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <title>Welcome</title>
+    <script>
+
+        function promptForUsername() {
+           var username = sessionStorage.getItem('username');
+
+           if (username == null || username.trim() === '') {
+               username = prompt('Enter Your Username');
+
+               if (username == null || username.trim() === '') {
+                   promptForUsername();
+               } else {
+                   sessionStorage.setItem('username', username);
+               }
+           }
+        }
+       promptForUsername();
+    </script>
+</head>
+<body>
+	<h2>Select Chat Room</h2>
+    <form th:action="@{/channels/create}" method="post">
+	    <div th:each="channel : ${channels}">
+    		<a th:href="@{/channels/{channelId}(channelId=${channel.channelId})}" th:text="${channel.name}"></a>
+    	</div>
+    	<input type="submit" value="Create New Channel"/>
+    </form>
+
+</body>
+</html>

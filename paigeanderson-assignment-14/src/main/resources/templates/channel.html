@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://thymeLeaf.org">
+ <head>
+		<title>Channel</title>
+		<link rel="stylesheet" href="/css/channel.css">
+		<script>
+			document.addEventListener("DOMContentLoaded", ()  => {
+				var username = sessionStorage.getItem('username')
+				if (username === null) {
+					window.location.href = '/welcome'
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<div class="textbox" id="messages"></div>
+		<div class="textbox" id="message-text">
+			<input type="text" id="message-input" placeholder="Type your message here">
+
+			<button class="submit-button">Submit</button>
+		</div>
+		<script type="text/javascript" src="/js/channel.js"></script>
+	</body>
+    
+</html>

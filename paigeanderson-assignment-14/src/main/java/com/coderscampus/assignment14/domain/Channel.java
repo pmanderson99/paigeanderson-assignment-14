@@ -3,14 +3,14 @@ package com.coderscampus.assignment14.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "channels")
@@ -18,8 +18,8 @@ public class Channel {
 
 	private Long channelId;
 	private String channelName;
-	private List<User> users = new ArrayList<>();
-	private List<Message> messages = new ArrayList<>();
+	private List<User> users = new ArrayList<User>();
+	private List<Message> messages = new ArrayList<Message>();
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getChannelId() {

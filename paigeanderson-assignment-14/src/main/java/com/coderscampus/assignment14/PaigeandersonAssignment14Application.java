@@ -8,6 +8,6 @@ public class PaigeandersonAssignment14Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaigeandersonAssignment14Application.class, args);
-	}
+	}	
 
 }
