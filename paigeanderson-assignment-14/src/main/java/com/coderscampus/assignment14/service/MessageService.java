@@ -1,7 +1,5 @@
 package com.coderscampus.assignment14.service;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +16,12 @@ public class MessageService {
 	@Autowired
 	private MessageRepository messageRepo;
 	
-	public List<Message> findAllByChannelId(String channelName){
-		return messageRepo.findAllByChannelId(channelName);
+	public List<Message> findAll(){
+		return messageRepo.findAll();
+	}
+	
+	public void saveMessage(Message message) {
+		messageRepo.save(message);
 	}
 
-	public Message save(List<Message> Messages) {
-		List<Message> savedMessages = new ArrayList<>();
-		for (Message message : Messages) {
-			Message savedMessage = new Message();
-			savedMessages.add(message);
-			savedMessages.add(savedMessage);
-		}
-		return (Message) savedMessages;
-	}
 }

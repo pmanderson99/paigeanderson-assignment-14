@@ -24,7 +24,7 @@
 	<h2>Select Chat Room</h2>
     <form th:action="@{/channels/create}" method="post">
 	    <div th:each="channel : ${channels}">
-    		<a th:href="@{/channels/{channelId}(channelId=${channel.channelId})}" th:text="${channel.name}"></a>
+    		<a th:href="@{/channels/{channelId}(channelId=${channel.channelId})}" th:text="${channel.channelName}"></a>
     	</div>
     	<input type="submit" value="Create New Channel"/>
     </form>

@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
@@ -50,4 +51,17 @@ public class ChannelController {
 		
 		return "channel";
 	}
+	
+	@PostMapping("/create")
+	public String createChannel(@RequestParam Channel channel, ModelMap model) {
+		Channel newChannel = channelService.saveChannel(channel);
+		if (newChannel == null) {
+			model.addAttribute("channelCreationError", true);
+		} else {
+			model.addAttribute("newChannel", newChannel);
+		}
+		return "welcome";
+	}
+	
+	
 }

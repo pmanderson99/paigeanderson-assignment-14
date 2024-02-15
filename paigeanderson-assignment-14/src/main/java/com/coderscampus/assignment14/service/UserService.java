@@ -28,8 +28,8 @@ public class UserService {
 		return userRepo.findById(userId);
 	}
 	
-	public User findByUserName(User user) {
-		return userRepo.findByName(user);
+	public User findByUserName(String userName) {
+		return userRepo.findByUserName(userName);
 	}
 	
 }
