@@ -5,23 +5,27 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "channels")
+@Table(name = "channel")
 public class Channel {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long channelId;
 	private String channelName;
+	@ManyToMany(mappedBy = "channels")
 	private List<User> users = new ArrayList<User>();
+	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
 	private List<Message> messages = new ArrayList<Message>();
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	public Long getChannelId() {
 		return channelId;
 	}
@@ -34,15 +38,12 @@ public class Channel {
 	public void setName(String name) {
 		this.channelName = name;
 	}
-	@ManyToMany(mappedBy = "channels", cascade = CascadeType.PERSIST)
 	public List<User> getUsers() {
 		return users;
 	}
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL,
-			orphanRemoval = true)
 	public List<Message> getMessages() {
 		return messages;
 	}

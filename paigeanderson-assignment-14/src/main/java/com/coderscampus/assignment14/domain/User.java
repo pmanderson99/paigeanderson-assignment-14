@@ -14,15 +14,20 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 	private String userName;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Message> messages = new ArrayList<Message>();
+	@ManyToMany
+	@JoinTable(name = "user_channel", joinColumns = @JoinColumn(name = "user_id"),
+					inverseJoinColumns = @JoinColumn(name = "channel_id"))
 	private List<Channel> channels = new ArrayList<Channel>();
 	
 	
@@ -38,16 +43,12 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Message> getMessages() {
 		return messages;
 	}
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
-	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable( name = "user_channel", joinColumns = @JoinColumn(name = "user_id"),
-        		inverseJoinColumns = @JoinColumn(name = "channel_id"))
 	public List<Channel> getChannels() {
 		return channels;
 	}
