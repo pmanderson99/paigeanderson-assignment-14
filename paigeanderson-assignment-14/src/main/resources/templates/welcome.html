@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
     <title>Welcome</title>
     <script>
 
@@ -22,12 +22,12 @@
 </head>
 <body>
 	<h2>Select Chat Room</h2>
-    <form th:action="@{/channels/create}" method="post">
 	    <div th:each="channel : ${channels}">
     		<a th:href="@{/channels/{channelId}(channelId=${channel.channelId})}" th:text="${channel.channelName}"></a>
     	</div>
     	<input type="submit" value="Create New Channel"/>
-    </form>
+    	<form th:action="@{/welcome/createChannel}" method="post">
+    	</form>
 
 </body>
 </html>

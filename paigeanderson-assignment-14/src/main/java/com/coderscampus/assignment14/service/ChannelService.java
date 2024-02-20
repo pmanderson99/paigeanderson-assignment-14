@@ -19,6 +19,12 @@ public class ChannelService {
 		return channelRepo.findAll();
 	}
 	
+	public Channel createNewChannel(String channelName) {
+		Channel channel = new Channel();
+		channel.setChannelName(channelName);
+		return channelRepo.save(channel);
+	}
+	
 	public Channel findByChannelId(Long channelId) {
 		Optional<Channel> channelOpt = channelRepo.findById(channelId);
 		return channelOpt.orElse(new Channel());

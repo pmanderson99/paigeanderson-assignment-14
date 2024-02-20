@@ -32,11 +32,11 @@ public class Channel {
 	public void setChannelId(Long channelId) {
 		this.channelId = channelId;
 	}
-	public String getName() {
+	public String getChannelName() {
 		return channelName;
 	}
-	public void setName(String name) {
-		this.channelName = name;
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
 	}
 	public List<User> getUsers() {
 		return users;

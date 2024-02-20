@@ -8,60 +8,53 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
 import com.coderscampus.assignment14.service.ChannelService;
 
-
 @Controller
 public class ChannelController {
-
+	
 	@Autowired
 	private ChannelService channelService;
-
 	
 	@GetMapping("/")
-	public String redirectToWelcome() {
-		return "redirect:/welcome";
-	}
-	@PostMapping("/")
-	public String newChannel(Channel channel) {
-		channelService.saveChannel(channel);
-		System.out.println(channel);
-		
+	public String directToWelcome() {
 		return "redirect:/welcome";
 	}
 
 	@GetMapping("/welcome")
 	public String getWelcomePage(ModelMap model) {
+
 		List<Channel> channels = channelService.findAll();
 		model.put("channels", channels);
 		model.put("channel", new Channel());
-		
+
 		return "welcome";
 	}
-	
-	@GetMapping("/channel/{channelId}")
-	public String getChannel(@PathVariable Long channelId, ModelMap model) {
+
+	@GetMapping("/channels/{channelId}")
+	public String getOneChannel(@PathVariable Long channelId, ModelMap model) {
 		Channel channel = channelService.findByChannelId(channelId);
 		model.put("channel", channel);
 		model.put("messages", new Message());
-		
 		return "channel";
 	}
 	
-	@PostMapping("/create")
-	public String createChannel(@RequestParam Channel channel, ModelMap model) {
-		Channel newChannel = channelService.saveChannel(channel);
+	@PostMapping("/welcome/createChannel")
+	public String createNewChannel(String channelName, ModelMap model) {
+		Channel newChannel = channelService.createNewChannel(channelName);
 		if (newChannel == null) {
 			model.addAttribute("channelCreationError", true);
 		} else {
 			model.addAttribute("newChannel", newChannel);
 		}
-		return "welcome";
+		channelService.saveChannel(newChannel);
+		return "redirect:/welcome";
 	}
-	
+
+
 	
 }
+
