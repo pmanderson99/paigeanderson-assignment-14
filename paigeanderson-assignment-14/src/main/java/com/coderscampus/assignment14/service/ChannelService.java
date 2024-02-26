@@ -23,6 +23,7 @@ public class ChannelService {
 		Channel channel = new Channel();
 		channel.setChannelName(channelName);
 		return channelRepo.save(channel);
+		
 	}
 	
 	public Channel findByChannelId(Long channelId) {

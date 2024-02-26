@@ -19,6 +19,7 @@ public class UserController {
 	@ResponseBody
 	public User createUser(@RequestBody String userName) {
 		return userService.createUser(userName);
+		
 	}
 
 }

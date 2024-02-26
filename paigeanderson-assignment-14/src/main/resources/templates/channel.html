@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Channel</title>
-		<link rel="stylesheet" href="/css/channel.css">
-		<script>
+	<title>ChatRoom</title>
+	<link rel="stylesheet" href="/css/channel.css">
+	<script>
 			document.addEventListener("DOMContentLoaded", ()  => {
 				var username = sessionStorage.getItem('username')
 				if (username === null) {
@@ -13,12 +13,20 @@
 		</script>
 	</head>
 	<body>
-		<div class="textbox" id="messages"></div>
+		<div class="chat-box">
+			<div class="chat-area">
+			<div class="chat-messages"></div>
+			</div>
+		</div>
+		
 		<div class="textbox" id="message-text">
 			<input type="text" id="message-input" placeholder="Type your message here">
 
-			<button class="submit-button">Submit</button>
+			<button id="send-button">Send</button>
+	<div>
+        <a th:href="@{/welcome}">Home</a><br />
+    </div>
 		</div>
-		<script type="text/javascript" src="/js/channel.js"></script>
 	</body>
+  <script type="text/javascript" src="/js/channel.js"></script>
 </html>

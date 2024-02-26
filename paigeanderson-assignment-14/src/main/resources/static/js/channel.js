@@ -1,47 +1,22 @@
-let messageBox = document.querySelector("#message-box")
-setInterval(getMessages, 500)
-
-let id = document.querySelector('textarea[data-id]')
-let channelId = id.getAttribute('data-id')
-let user = JSON.parse(sessionStorage.getItem('user'))
-
-messageBox.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        var message = {
-            "channelId": channelId,
-            "contents": messageBox.value,
-            "user": user
-        }
-        e.preventDefault();
-        messageBox.value ='';
-        fetch(`http://localhost:8080/messages`,
-            {
-                method: "POST",
-                headers:
-                {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(message)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-            })
-    }
-})
-
-function getMessages() {
-    let messageArea = document.querySelector("#messages")
-    fetch(`http://localhost:8080/messages/${channelId}`)
-        .then(response => response.json())
-        .then(data => {
-            messageArea.innerHTML = ''
-            data.forEach(message => {
-                messageArea.innerHTML += `<div>
-			  <span>${message.user.name}: ${message.contents}</span>
-			</div>`
-            })
-        })
+function sendMessage() {
+  const messageInput = document.getElementById('message-input');
+  const message = messageInput.value.trim();
+  if (message !== '') {
+    const chatMessages = document.querySelector('.chat-messages');
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.textContent = message;
+    chatMessages.appendChild(messageElement);
+    messageInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
 }
 
-
+// Event listener
+document.getElementById('send-button').addEventListener('click', sendMessage);
+document.getElementById('message-input').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    sendMessage();
+  }
+});
