@@ -20,3 +20,25 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
     sendMessage();
   }
 });
+  const channelName = window.location.pathname.split("/").pop();
+  console.log(channelName);
+
+  const chatMessagesElement = document.getElementById(".chat-messages");
+
+    function pollMessages() {
+        console.log("about to hit the fetch")
+        fetch(`/channels/${channelName}/messages`)
+            .then(response => response.json())
+            .then(messages => {
+                chatMessagesElement.innerHTML = "";
+                messages.forEach(message => {
+                    const messageElement = document.createElement("li");
+                    messageElement.innerText = `${message.user}: ${message.messageText}`;
+                    chatMessagesElement.appendChild(messageElement);
+                });
+            })
+            .catch(error => console.error("Error polling messages:", error));
+    }
+
+    pollMessages();
+    setInterval(pollMessages, 500);

@@ -1,6 +1,6 @@
 .chat-box {
   width: 500px;
-  background-color: #f0f0f0;
+  background-color:#f0f0f0;;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -14,7 +14,7 @@
 }
 .message {
   margin-bottom: 10px;
-  background-color: #fff;
+  background-color:#fff;
   padding: 10px;
   border-radius: 4px;
 }
