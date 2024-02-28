@@ -1,11 +1,20 @@
+const messageInput = document.getElementById('message-input');
+const channelId = extractChannelIdFromUrl;
+const messageText = messageInput.value;
+const username = sessionStorage.getItem('username');
+//const message = {
+//	channelId, username, messageText
+//};
+
+//Function to handle sending a message
 function sendMessage() {
-  const messageInput = document.getElementById('message-input');
-  const message = messageInput.value.trim();
+  let message = messageInput.value.trim()
+  messageInput.value.trim();
   if (message !== '') {
     const chatMessages = document.querySelector('.chat-messages');
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
-    messageElement.textContent = message;
+    messageElement.textContent = username +': ' + message;
     chatMessages.appendChild(messageElement);
     messageInput.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -20,25 +29,10 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
     sendMessage();
   }
 });
-  const channelName = window.location.pathname.split("/").pop();
-  console.log(channelName);
 
-  const chatMessagesElement = document.getElementById(".chat-messages");
-
-    function pollMessages() {
-        console.log("about to hit the fetch")
-        fetch(`/channels/${channelName}/messages`)
-            .then(response => response.json())
-            .then(messages => {
-                chatMessagesElement.innerHTML = "";
-                messages.forEach(message => {
-                    const messageElement = document.createElement("li");
-                    messageElement.innerText = `${message.user}: ${message.messageText}`;
-                    chatMessagesElement.appendChild(messageElement);
-                });
-            })
-            .catch(error => console.error("Error polling messages:", error));
+function extractChannelIdFromUrl() {
+    var currentUrl = window.location.href;
+    var segments = currentUrl.split('/');
+    let channelId = segments[segments.length - 1];
+    return channelId
     }
-
-    pollMessages();
-    setInterval(pollMessages, 500);
