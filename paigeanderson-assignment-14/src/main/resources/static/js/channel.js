@@ -1,15 +1,27 @@
 const messageInput = document.getElementById('message-input');
 const channelId = extractChannelIdFromUrl;
-const messageText = messageInput.value;
 const username = sessionStorage.getItem('username');
-//const message = {
-//	channelId, username, messageText
-//};
+
+
 
 //Function to handle sending a message
 function sendMessage() {
-  let message = messageInput.value.trim()
-  messageInput.value.trim();
+  const message = {
+	  "messageInput": messageInput.value.trim(),
+	  "channelId": channelId,
+	  "userName": username
+	  }
+  messageInput.value = ''
+  console.log('sending msg')
+  fetch(`/channels/{channelId}/createMessage`, {
+	  method: "POST",
+	  headers: {
+		  'Content-Type': 'application/json'
+	  },
+	  body: JSON.stringify(message)
+  }).then(response => {
+	  console.log(response)
+  })
   if (message !== '') {
     const chatMessages = document.querySelector('.chat-messages');
     const messageElement = document.createElement('div');

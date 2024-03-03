@@ -1,8 +1,10 @@
 .chat-box {
   width: 500px;
-  background-color:#f0f0f0;;
+  background-color:#f0f0f0;
+  border: 1px solid;
   border-radius: 8px;
   overflow: hidden;
+  padding:20px;
 }
 .chat-area {
   overflow-y: scroll;
@@ -19,7 +21,7 @@
   border-radius: 4px;
 }
 #message-input {
-  flex-grow: 1;
+  width: 250px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;

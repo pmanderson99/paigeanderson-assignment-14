@@ -18,12 +18,12 @@ public class MessageController {
 	private MessageService messageService;
 	
 	@PostMapping("/channels/{channelId}/messages")
-	@ResponseBody
 	public List<Message> getMessages() {
 		return messageService.findAll();
 	}
 
 	@PostMapping("/channels/{channelId}/createMessage")
+	@ResponseBody
 	public Message createMessage(@RequestBody Message message) {
 		messageService.saveMessage(message);
 		return message;
