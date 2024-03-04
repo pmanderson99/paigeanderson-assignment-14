@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +18,8 @@ public class MessageController {
 	@Autowired
 	private MessageService messageService;
 	
-	@PostMapping("/channels/{channelId}/messages")
+	@GetMapping("/channels/{channelId}/messages")
+	@ResponseBody
 	public List<Message> getMessages() {
 		return messageService.findAll();
 	}
