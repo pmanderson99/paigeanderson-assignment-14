@@ -2,7 +2,12 @@ const messageInput = document.getElementById('message-input');
 const channelId = extractChannelIdFromUrl;
 const username = sessionStorage.getItem('username');
 
-
+function extractChannelIdFromUrl() {
+	var currentUrl = window.location.href;
+	var segments = currentUrl.split('/');
+	let channelId = segments[segments.length - 1];
+	return channelId
+}
 
 //Function to handle sending a message
 function sendMessage() {
@@ -12,17 +17,7 @@ function sendMessage() {
 		"channelId": channelId,
 		"userName": username
 	}
-	messageInput.value = ''
 	console.log('sending msg')
-	fetch(`/channels/{channelId}/createMessage`, {
-		method: "POST",
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(message)
-	}).then(response => {
-		console.log(response)
-	})
 	if (content !== '') {
 		const chatMessages = document.querySelector('.chat-messages');
 		const messageElement = document.createElement('div');
@@ -32,6 +27,15 @@ function sendMessage() {
 		messageInput.value = '';
 		chatMessages.scrollTop = chatMessages.scrollHeight;
 	}
+	fetch(`/channels/{channelId}/createMessage`, {
+		method: "POST",
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(message)
+	}).then(response => {
+		console.log(response)
+	})
 }
 
 // Event listener
@@ -43,9 +47,3 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-function extractChannelIdFromUrl() {
-	var currentUrl = window.location.href;
-	var segments = currentUrl.split('/');
-	let channelId = segments[segments.length - 1];
-	return channelId
-}

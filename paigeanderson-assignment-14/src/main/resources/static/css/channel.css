@@ -8,7 +8,7 @@
 }
 .chat-area {
   overflow-y: scroll;
-  padding: 20px;
+  padding: 10px;
 }
 .chat-messages {
   display: flex;
