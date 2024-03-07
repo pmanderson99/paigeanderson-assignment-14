@@ -6,10 +6,7 @@
   overflow: hidden;
   padding:20px;
 }
-.chat-area {
-  overflow-y: scroll;
-  padding: 10px;
-}
+
 .chat-messages {
   display: flex;
   flex-direction: column;
