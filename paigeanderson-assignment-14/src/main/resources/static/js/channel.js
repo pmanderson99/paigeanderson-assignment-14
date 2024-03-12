@@ -15,7 +15,7 @@ function extractChannelIdFromUrl() {
 function sendMessage() {
 	const message = {
 		messageText: messageInput.value,
-		channelId: channelId,
+		channel: channelId,
 		userName: username
 	}
 	console.log('sending msg')
@@ -33,14 +33,15 @@ function sendMessage() {
 }
 
 function pollMessages() {
-	fetch(`/channels/{channelId}/messages`)
+	 fetch(`/channels/{channelId}/messages`)
 		.then(response => response.json())
-		.then(data => {
+		.then(message => {
 			const messageDiv = document.querySelector('.chat-messages');
 			messageDiv.innerHTML = '';
-			data.forEach(message => {
+			message.forEach(message => {
 				const div = document.createElement('div');
-				div.innerHTML = '<b>' + username + '</b>: ' + message.messageText
+				div.classList.add('message');
+				div.innerHTML = `${message.userName}: ${message.messageText}`;
 				messageDiv.appendChild(div);
 			});
 		})

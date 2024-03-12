@@ -8,16 +8,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestParam;
 
 import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
+import com.coderscampus.assignment14.domain.User;
 import com.coderscampus.assignment14.service.ChannelService;
+import com.coderscampus.assignment14.service.MessageService;
 
 @Controller
 public class ChannelController {
 	
 	@Autowired
 	private ChannelService channelService;
+	@Autowired
+	private MessageService messageService;
 	
 	@GetMapping("/")
 	public String directToWelcome() {
@@ -34,11 +40,13 @@ public class ChannelController {
 		return "welcome";
 	}
 
-	@GetMapping("/channels/{channelId}")
-	public String getOneChannel(@PathVariable Long channelId, ModelMap model) {
-		Channel channel = channelService.findByChannelId(channelId);
+	@GetMapping("/channels/{channelName}")
+	public String getOneChannel(@PathVariable String channelName, ModelMap model) {
+		Channel channel = channelService.findByChannelName(channelName);
+		List<Message> messages = messageService.getMessagesByChannel(channelName);
 		model.put("channel", channel);
-		model.put("messages", new Message());
+		model.put("messages", messages);
+		model.put("users", new User());
 		return "channel";
 	}
 	

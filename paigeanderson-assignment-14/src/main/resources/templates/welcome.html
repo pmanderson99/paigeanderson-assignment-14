@@ -7,7 +7,7 @@
 <body>
 	<h2>Select Channel</h2>
 	<div th:each="channel : ${channels}">
-		<a th:href="@{/channels/{channelId}(channelId=${channel.channelId})}"
+		<a th:href="@{/channels/{channelName}(channelName=${channel.channelName})}"
 			th:text="${channel.channelName}"></a>
 	</div>
 	<form action="/welcome/createChannel" method="post">

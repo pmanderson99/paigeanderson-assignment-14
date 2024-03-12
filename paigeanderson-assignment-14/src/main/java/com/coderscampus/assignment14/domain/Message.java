@@ -18,6 +18,7 @@ public class Message {
 	@Column(name = "message_id")
 	private Long messageId;
 	private String messageText;
+	private String userName;
 	@ManyToOne
 	@JoinColumn(name = "channel_id")
 	private Channel channel;
@@ -37,6 +38,13 @@ public class Message {
 	}
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public Channel getChannel() {
 		return channel;

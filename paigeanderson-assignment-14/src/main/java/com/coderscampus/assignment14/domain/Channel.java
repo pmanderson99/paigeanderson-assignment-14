@@ -20,6 +20,7 @@ public class Channel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long channelId;
 	private String channelName;
+
 	@ManyToMany(mappedBy = "channels")
 	private List<User> users = new ArrayList<User>();
 	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
@@ -50,11 +51,6 @@ public class Channel {
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
-	@Override
-	public String toString() {
-		return "Channel [channelId=" + channelId + ", channelName=" + channelName + ", users=" + users + ", messages="
-				+ messages + "]";
-	}
-	
+
 	
 }
