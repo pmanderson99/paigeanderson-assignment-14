@@ -1,43 +1,43 @@
 package com.coderscampus.assignment14.service;
 
 import java.util.List;
-
+//import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderscampus.assignment14.domain.Channel;
-//import com.coderscampus.assignment14.domain.Message;
 import com.coderscampus.assignment14.repository.ChannelRepository;
 
 @Service
 public class ChannelService {
 	
+	private final ChannelRepository channelRepo;
+	
 	@Autowired
-	ChannelRepository channelRepo;
+	public ChannelService(ChannelRepository channelRepo) {
+		this.channelRepo = channelRepo;
+	}
+	
+	public Channel findByChannelId(Long channelId) {
+		return channelRepo.findByChannelId(channelId);
+	}
 	
 	public List<Channel> findAll() {
 		return channelRepo.findAll();
 	}
 	
-	public Channel createNewChannel(String channelName) {
-		Channel channel = new Channel();
-		channel.setChannelName(channelName);
-		return channelRepo.save(channel);
+	public Channel createChannel(String channelName) {
+		Channel newChannel = new Channel();
+		newChannel.setChannelName(channelName);
 		
+		return channelRepo.save(newChannel);
 	}
 	
-	public Channel findByChannelName(String channelName) {
-		return channelRepo.findByChannelName(channelName);
+	public void save(Channel channel) {
+		channelRepo.save(channel);
 	}
 	
-	public Channel findByChannelId(Long channelId) {
-		return channelRepo.findById(channelId).orElse(null);
-	}
-	
-	public Channel saveChannel(Channel channel) {
-		return channelRepo.save(channel);
-	}
 	
 	
 }

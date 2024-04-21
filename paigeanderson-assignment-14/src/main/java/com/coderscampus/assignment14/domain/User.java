@@ -24,11 +24,11 @@ public class User {
 	private Long userId;
 	private String userName;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Message> messages = new ArrayList<>();
+	private List<Message> messages = new ArrayList<Message>();
 	@ManyToMany
 	@JoinTable(name = "user_channel", joinColumns = @JoinColumn(name = "user_id"),
 					inverseJoinColumns = @JoinColumn(name = "channel_id"))
-	private List<Channel> channels = new ArrayList<>();
+	private List<Channel> channels = new ArrayList<Channel>();
 
 	
 	public Long getUserId() {

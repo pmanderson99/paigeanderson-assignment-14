@@ -39,7 +39,6 @@ public class Message {
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
 	}
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -58,5 +57,6 @@ public class Message {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	
 }

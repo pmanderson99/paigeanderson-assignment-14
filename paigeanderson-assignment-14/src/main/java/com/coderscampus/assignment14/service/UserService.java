@@ -1,7 +1,5 @@
 package com.coderscampus.assignment14.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +22,8 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
-	public Optional<User> findByUserId(Long userId) {
-		return userRepo.findById(userId);
+	public User findByUserId(Long userId) {
+		return userRepo.findByUserId(userId);
 	}
 	
 	public User findByUserName(String userName) {

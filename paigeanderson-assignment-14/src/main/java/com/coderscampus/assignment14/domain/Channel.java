@@ -20,10 +20,9 @@ public class Channel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long channelId;
 	private String channelName;
-
 	@ManyToMany(mappedBy = "channels")
 	private List<User> users = new ArrayList<User>();
-	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Message> messages = new ArrayList<Message>();
 	
 

@@ -8,6 +8,8 @@ import com.coderscampus.assignment14.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
+	User findByUserId(Long userId);
+	
 	User findByUserName(String userName);
-
+	
 }
