@@ -13,14 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "channel")
+@Table(name = "channels")
 public class Channel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long channelId;
 	private String channelName;
-	@ManyToMany(mappedBy = "channels")
+	@ManyToMany(mappedBy = "channels", cascade = CascadeType.PERSIST)
 	private List<User> users = new ArrayList<User>();
 	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Message> messages = new ArrayList<Message>();

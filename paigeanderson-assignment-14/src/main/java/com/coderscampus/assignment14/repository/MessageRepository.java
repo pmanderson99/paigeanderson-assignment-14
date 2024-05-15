@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.coderscampus.assignment14.domain.Message;
 
 
-
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 	

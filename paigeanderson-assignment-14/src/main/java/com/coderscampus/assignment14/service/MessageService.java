@@ -28,8 +28,8 @@ public class MessageService {
 		this.userService = userService;
 	}
 	
-	public void createMessage(MessageDto message, Long channelId) {
-		Channel channel = channelService.findByChannelId(channelId);
+	public void createMessage(MessageDto message) {
+		Channel channel = channelService.findByChannelId(message.getChannelId());
 		Message newMessage = new Message();
 		User user = new User();
 		user = userService.findByUserId(message.getUserId());
