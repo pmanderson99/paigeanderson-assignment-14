@@ -28,13 +28,13 @@ public class MessageService {
 		this.userService = userService;
 	}
 	
-	public void createMessage(MessageDto message) {
-		Channel channel = channelService.findByChannelId(message.getChannelId());
+	public void createMessage(MessageDto messageDto, Long channelId) {
+		Channel channel = channelService.findByChannelId(channelId);
 		Message newMessage = new Message();
 		User user = new User();
-		user = userService.findByUserId(message.getUserId());
+		user = userService.findByUserId(messageDto.getUserId());
 		newMessage.setUser(user);
-		newMessage.setMessageText(message.getMessage());
+		newMessage.setMessageText(messageDto.getMessage());
 		newMessage.setChannel(channel);
 		messageRepo.save(newMessage);
 		

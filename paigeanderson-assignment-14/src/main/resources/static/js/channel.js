@@ -4,6 +4,7 @@ const username = sessionStorage.getItem('username');
 const content = messageInput.value.trim()
 
 
+
 function extractChannelIdFromUrl() {
 	var currentUrl = window.location.href;
 	var segments = currentUrl.split('/');
@@ -19,7 +20,7 @@ function sendMessage() {
 		userName: username
 	}
 	console.log('sending msg')
-	fetch(`/channels/{channelId}/createMessage`, {
+	fetch(`/sentMessages/${channelId}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -33,7 +34,7 @@ function sendMessage() {
 }
 
 function pollMessages() {
-	 fetch(`/channels/{channelId}/messages`,{
+	 fetch(`/getMessages/${channelId}`,{
 		method: 'POST',
 		headers:{
 			'Content-Type': 'application/json'

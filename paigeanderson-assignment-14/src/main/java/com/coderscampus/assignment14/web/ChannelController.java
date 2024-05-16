@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 import com.coderscampus.assignment14.domain.Channel;
-import com.coderscampus.assignment14.domain.User;
-import com.coderscampus.assignment14.dto.MessageDto;
+//import com.coderscampus.assignment14.domain.User;
+//import com.coderscampus.assignment14.dto.MessageDto;
 import com.coderscampus.assignment14.service.ChannelService;
-import com.coderscampus.assignment14.service.MessageService;
+import com.coderscampus.assignment14.service.UserService;
 
 
 @Controller
 public class ChannelController {
 	
 	 private final ChannelService channelService;
-	 private final MessageService messageService;
+	 private final UserService userService;
 	    
 	    @Autowired
-	    public ChannelController(ChannelService channelService, MessageService messageService) {
+	    public ChannelController(ChannelService channelService, UserService userService) {
 	        this.channelService = channelService;
-	        this.messageService = messageService;
+	        this.userService = userService;
 	    }
 
 	    @GetMapping("/")
@@ -53,11 +53,11 @@ public class ChannelController {
 	    @GetMapping("/channels/{channelId}")
 		public String getChannel(ModelMap model, @PathVariable Long channelId) {
 	    	Channel channel = channelService.findByChannelId(channelId);
-	    	List<MessageDto> messages = messageService.getMessageByChannelId(channelId);
-			model.put("channel", channel);
-			model.put("messages", messages);
-			model.put("users", new User());
-			return "channel";
+	    	model.put("channels", channelService.findAll());
+	    	model.put("channel", channel);
+	    	model.put("users", userService.findAll());
+	    	return "channel";
+	    	
 		}
 	
 }

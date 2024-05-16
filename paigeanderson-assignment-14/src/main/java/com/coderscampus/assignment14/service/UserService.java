@@ -1,5 +1,7 @@
 package com.coderscampus.assignment14.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import com.coderscampus.assignment14.repository.UserRepository;
 public class UserService {
 	
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
 	
 	public User createUser(String userName) {
 		User user = new User();
@@ -30,5 +32,10 @@ public class UserService {
 		return userRepo.findByUserName(userName);
 	}
 	
+	public List<User> findAll(){
+		List<User> findAll = userRepo.findAll();
+		return findAll;
+		
+	}
 	
 }

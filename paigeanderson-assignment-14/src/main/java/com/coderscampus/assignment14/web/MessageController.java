@@ -25,25 +25,21 @@ public class MessageController {
 	}
 	
 	
-	@PostMapping("/channels/{channelId}/messages")
 	@ResponseBody
-	public List<MessageDto> getMessages(@PathVariable Long channelId) {
-
-		return messageService.getMessageByChannelId(channelId);
-
+	@PostMapping("/sentMessages/{channelId}")
+	private void sentMessage(@RequestBody MessageDto messageDto, @PathVariable Long channelId) {
+		MessageDto msgDto = new MessageDto();
+		System.out.println(messageDto.getChannelId());
+		msgDto.setChannelId(messageDto.getChannelId());
+		msgDto.setMessage(messageDto.getMessage());
+		msgDto.setUserId(messageDto.getUserId());
+		messageService.createMessage(messageDto, channelId);
 	}
-
 	
-	@PostMapping("/channels/{channelId}/createMessage")
 	@ResponseBody
-	public void createMessage(@RequestBody MessageDto message) {
-		
-		MessageDto messageDto = new MessageDto();
-		messageDto.setChannelId(message.getChannelId());
-		messageDto.setMessage(message.getMessage());
-		messageDto.setUserId(message.getUserId());
-		messageService.createMessage(message);
-		
+	@PostMapping("/getMessages/{channelId}") 
+	private List<MessageDto> getMessages(@PathVariable Long channelId){
+		return messageService.getMessageByChannelId(channelId);
 	}
 
 }
