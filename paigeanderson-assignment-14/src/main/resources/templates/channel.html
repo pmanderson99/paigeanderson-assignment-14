@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Chat Room</title>
-
+<title>[[${channel.channelName}]]</title>
 <link rel="stylesheet" href="/css/channel.css">
 <script>
 			document.addEventListener("DOMContentLoaded", ()  => {
@@ -14,12 +13,12 @@
 </script>
 </head>
 <body>
+	<h1 th:text="${channel.channelName}" id="channel-name"></h1>
 	<div class="chat-box">
 			<div class="chat-messages"></div>
 	</div>
 
 	<div class="textbox" id="message-text">
-		<span id="textBox"></span>
 		<input type="text" id="message-input" placeholder="Type your message here...">
 
 		<button id="send-button">Send</button>

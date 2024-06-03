@@ -12,14 +12,21 @@ import com.coderscampus.assignment14.service.UserService;
 @Controller
 public class UserController {
 	
+	private final UserService userService;
+	
 	@Autowired
-	private UserService userService;
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 	
 	@PostMapping("/welcome/createUser")
 	@ResponseBody
-	public User createUser(@RequestBody String userName) {
+	public String createUser(@RequestBody String userName) {
+		User user = userService.findByUserName(userName);
+		user.setUserName(userName);
+		user = userService.saveUser(user);
 		
-		return userService.createUser(userName);
+		return "redirect:/channels/" + user.getUserId();
 	
 	}
 

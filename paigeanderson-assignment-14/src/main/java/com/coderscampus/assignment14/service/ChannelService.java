@@ -1,12 +1,13 @@
 package com.coderscampus.assignment14.service;
 
 import java.util.List;
-//import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderscampus.assignment14.domain.Channel;
+//import com.coderscampus.assignment14.domain.Message;
 import com.coderscampus.assignment14.repository.ChannelRepository;
 
 @Service
@@ -19,13 +20,14 @@ public class ChannelService {
 		this.channelRepo = channelRepo;
 	}
 	
-	public Channel findByChannelId(Long channelId) {
-		return channelRepo.findByChannelId(channelId);
+
+	public Channel findById(Long channelId) {
+		return channelRepo.findById(channelId).orElse(null);
 	}
 	
-	public List<Channel> findAll() {
-		return channelRepo.findAll();
-	}
+	public Channel findByChannelName(String channelName) {
+        return channelRepo.findByChannelName(channelName).orElse(null);
+    }
 	
 	public Channel createChannel(String channelName) {
 		Channel newChannel = new Channel();
@@ -34,10 +36,14 @@ public class ChannelService {
 		return channelRepo.save(newChannel);
 	}
 	
-	public void save(Channel channel) {
-		channelRepo.save(channel);
+	public Channel save(Channel channel) {
+		return channelRepo.save(channel);
+	}
+	
+	public List<Channel> findAll(){
+		return channelRepo.findAll();
 	}
 	
 	
-	
 }
+

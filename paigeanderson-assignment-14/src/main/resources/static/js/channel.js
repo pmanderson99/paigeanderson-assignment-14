@@ -1,26 +1,20 @@
-const messageInput = document.getElementById('message-input');
-const channelId = extractChannelIdFromUrl;
+let messageInput = document.getElementById('message-input');
+const queryString = window.location.href;
+const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
+const channelName = document.getElementById("channel-name").innerText;
 const username = sessionStorage.getItem('username');
-const content = messageInput.value.trim()
+const content = messageInput.value.trim();
 
-
-
-function extractChannelIdFromUrl() {
-	var currentUrl = window.location.href;
-	var segments = currentUrl.split('/');
-	let channelId = segments[segments.length - 1];
-	return channelId
-}
 
 
 function sendMessage() {
 	const message = {
 		messageText: messageInput.value,
-		channel: channelId,
+		channelId: channelId,
 		userName: username
 	}
 	console.log('sending msg')
-	fetch(`/sentMessages/${channelId}`, {
+	fetch(`/channels/${channelId}/createMessage`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -34,20 +28,14 @@ function sendMessage() {
 }
 
 function pollMessages() {
-	 fetch(`/getMessages/${channelId}`,{
-		method: 'POST',
-		headers:{
-			'Content-Type': 'application/json'
-		},
-	 })
+	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(message => {
+		.then(data => {
 			const messageDiv = document.querySelector('.chat-messages');
 			messageDiv.innerHTML = '';
-			message.forEach(message => {
+			data.forEach(message => {
 				const div = document.createElement('div');
-				div.classList.add('message');
-				div.innerHTML = `${message.userName}: ${message.messageText}`;
+				div.innerHTML = '<b>' + username + '</b>: ' + message.messageText
 				messageDiv.appendChild(div);
 			});
 		})

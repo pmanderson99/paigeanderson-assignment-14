@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "channels")
@@ -20,9 +23,11 @@ public class Channel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long channelId;
 	private String channelName;
-	@ManyToMany(mappedBy = "channels", cascade = CascadeType.PERSIST)
+	@ManyToMany(mappedBy = "channels", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<User> users = new ArrayList<User>();
-	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "channel", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Message> messages = new ArrayList<Message>();
 	
 
@@ -51,5 +56,12 @@ public class Channel {
 		this.messages = messages;
 	}
 
+    @Override
+    public String toString() {
+        return "Channel{" +
+                "channelId=" + channelId +
+                ", channelName='" + channelName + '\'' +
+                '}';
+    }
 	
 }

@@ -1,8 +1,6 @@
 package com.coderscampus.assignment14.service;
 
-import java.util.ArrayList;
 import java.util.List;
-//import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
 import com.coderscampus.assignment14.domain.User;
-import com.coderscampus.assignment14.dto.MessageDto;
 import com.coderscampus.assignment14.repository.MessageRepository;
 
 
@@ -28,29 +25,18 @@ public class MessageService {
 		this.userService = userService;
 	}
 	
-	public void createMessage(MessageDto messageDto, Long channelId) {
-		Channel channel = channelService.findByChannelId(channelId);
-		Message newMessage = new Message();
-		User user = new User();
-		user = userService.findByUserId(messageDto.getUserId());
-		newMessage.setUser(user);
-		newMessage.setMessageText(messageDto.getMessage());
-		newMessage.setChannel(channel);
-		messageRepo.save(newMessage);
-		
+	public Message save(Message message) {
+		User user = userService.findById(message.getUser().getUserId());
+		message.setUser(user);
+		Channel channel = channelService.findByChannelName(message.getChannel().getChannelName());
+		message.setChannel(channel);
+		messageRepo.save(message);
+		user.getMessages().add(message);
+		channel.getMessages().add(message);
+		return message;
 	}
-
-	public List<MessageDto> getMessageByChannelId(Long channelId) {
-		List<Message> messageList = messageRepo.findByChannelId(channelId);
-		List<MessageDto> messagesDto = new ArrayList<MessageDto>();
-		for (Message message:messageList) {
-			MessageDto messageDto = new MessageDto();
-			messageDto.setMessage(message.getMessageText());
-			messageDto.setUserId(message.getUser().getUserId());
-			messageDto.setChannelId(message.getMessageId());
-			messageDto.setUserName(message.getUser().getUserName());
-			messagesDto.add(messageDto);
-		}
-		return messagesDto;
+	
+	public List<Message> findMessagesByChannel(Long channelId){
+		return messageRepo.findByChannelId(channelId);
 	}
 }

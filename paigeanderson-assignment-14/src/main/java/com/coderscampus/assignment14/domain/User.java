@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -23,11 +26,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 	private String userName;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+	@JsonIgnore
 	private List<Message> messages = new ArrayList<Message>();
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name = "user_channel", joinColumns = @JoinColumn(name = "user_id"),
 					inverseJoinColumns = @JoinColumn(name = "channel_id"))
+	@JsonIgnore
 	private List<Channel> channels = new ArrayList<Channel>();
 
 	

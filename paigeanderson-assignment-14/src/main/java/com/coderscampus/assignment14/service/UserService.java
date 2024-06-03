@@ -2,17 +2,25 @@ package com.coderscampus.assignment14.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.User;
 import com.coderscampus.assignment14.repository.UserRepository;
 
 @Service
 public class UserService {
 	
+	private final UserRepository userRepo;
+	private final ChannelService channelService;
+	
 	@Autowired
-	private UserRepository userRepo;
+	public UserService(UserRepository userRepo, ChannelService channelService) {
+		this.userRepo = userRepo;
+		this.channelService = channelService;
+	}
 	
 	public User createUser(String userName) {
 		User user = new User();
@@ -24,8 +32,8 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
-	public User findByUserId(Long userId) {
-		return userRepo.findByUserId(userId);
+	public User findById(Long userId) {
+		return userRepo.findById(userId).orElse(null);
 	}
 	
 	public User findByUserName(String userName) {
@@ -33,9 +41,18 @@ public class UserService {
 	}
 	
 	public List<User> findAll(){
-		List<User> findAll = userRepo.findAll();
-		return findAll;
+		return userRepo.findAll();
 		
+	}
+	
+	public void saveUsersToChannel(Channel channel) {
+		findAll().stream()
+				 .forEach(user ->{
+					 user.getChannels().add(channel);
+					 channel.getUsers().add(user);
+					 channelService.save(channel);
+					 userRepo.save(user);
+				 });
 	}
 	
 }
