@@ -4,13 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
+//import com.coderscampus.assignment14.dto.MessageDto;
 //import com.coderscampus.assignment14.service.ChannelService;
 import com.coderscampus.assignment14.service.MessageService;
 
@@ -26,18 +28,19 @@ public class MessageController {
 	}
 	
 	
-	
 	@PostMapping("/channels/{channelId}/createMessage")
 	@ResponseBody
-	private void createMessage(@RequestBody Message message) {
-		messageService.save(message);
+	private void createMessage(@RequestBody Channel channel,Message message) {
+		messageService.save(message, channel);
 		
 	}
 	
-	@GetMapping("/channels/{channelId}/getMessages")
+	@PostMapping("/channels/{channelId}/getMessages")
 	@ResponseBody
 	public List<Message> getUpdatedMessages(@PathVariable Long channelId) {
-		return messageService.findMessagesByChannel(channelId);
+		return messageService.findMessagesByChannelId(channelId);
+
 	}
+	 
 	
 }

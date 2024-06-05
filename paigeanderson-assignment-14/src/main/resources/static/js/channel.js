@@ -28,7 +28,12 @@ function sendMessage() {
 }
 
 function pollMessages() {
-	fetch(`/channels/${channelId}/getMessages`)
+	fetch(`/channels/${channelId}/getMessages`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
 		.then(response => response.json())
 		.then(data => {
 			const messageDiv = document.querySelector('.chat-messages');
