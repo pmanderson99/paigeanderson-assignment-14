@@ -20,16 +20,18 @@ public class MessageService {
 	private final MessageRepository messageRepo;
 	private final ChannelService channelService;
 	
-
+	
 	
 	@Autowired
 	public MessageService(MessageRepository messageRepo, ChannelService channelService) {
 		this.messageRepo = messageRepo;
 		this.channelService = channelService;
+		
 	}
 
 	public Message save(Message message, Channel channel) {
-		channel = channelService.findById(channel.getChannelId());
+	    channelService.findById(channel.getChannelId());
+		
 		return messageRepo.save(message);
 	}
 

@@ -44,7 +44,6 @@ public class UserService {
 		
 	}
 	
-	
 	public void saveUsersToChannel(Channel channel) {
 		findAll().stream()
 				 .forEach(user ->{

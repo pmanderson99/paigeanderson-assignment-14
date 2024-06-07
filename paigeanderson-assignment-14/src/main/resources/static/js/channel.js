@@ -1,7 +1,7 @@
 let messageInput = document.getElementById('message-input');
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
-const channelName = document.getElementById("channel-name").innerText;
+const channelName = document.getElementById('channel-name').innerText;
 const username = sessionStorage.getItem('username');
 const content = messageInput.value.trim();
 
@@ -28,19 +28,15 @@ function sendMessage() {
 }
 
 function pollMessages() {
-	fetch(`/channels/${channelId}/getMessages`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	})
+	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
 		.then(data => {
 			const messageDiv = document.querySelector('.chat-messages');
 			messageDiv.innerHTML = '';
 			data.forEach(message => {
 				const div = document.createElement('div');
-				div.innerHTML = '<b>' + username + '</b>: ' + message.messageText
+				div.classList.add('message');
+				div.innerHTML = '<b>' + username + '</b>: '+ `${message.messageText}`;
 				messageDiv.appendChild(div);
 			});
 		})

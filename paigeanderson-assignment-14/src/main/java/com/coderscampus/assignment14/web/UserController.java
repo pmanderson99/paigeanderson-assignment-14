@@ -21,12 +21,9 @@ public class UserController {
 	
 	@PostMapping("/welcome/createUser")
 	@ResponseBody
-	public String createUser(@RequestBody String userName) {
-		User user = userService.findByUserName(userName);
-		user.setUserName(userName);
-		user = userService.saveUser(user);
+	public User createUser(@RequestBody String userName) {
 		
-		return "redirect:/channels/" + user.getUserId();
+		return userService.createUser(userName);
 	
 	}
 
