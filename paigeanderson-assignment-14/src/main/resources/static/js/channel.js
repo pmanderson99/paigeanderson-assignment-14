@@ -1,4 +1,4 @@
-let messageInput = document.getElementById('message-input');
+const messageInput = document.getElementById('message-input');
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
 const channelName = document.getElementById('channel-name').innerText;
@@ -9,7 +9,7 @@ const content = messageInput.value.trim();
 
 function sendMessage() {
 	const message = {
-		messageText: messageInput.value,
+		messageText: content,
 		channelId: channelId,
 		userName: username
 	}
@@ -30,10 +30,10 @@ function sendMessage() {
 function pollMessages() {
 	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(data => {
+		.then(message => {
 			const messageDiv = document.querySelector('.chat-messages');
 			messageDiv.innerHTML = '';
-			data.forEach(message => {
+			message.forEach(message => {
 				const div = document.createElement('div');
 				div.classList.add('message');
 				div.innerHTML = '<b>' + username + '</b>: '+ `${message.messageText}`;
@@ -49,6 +49,7 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	if (event.key === 'Enter') {
 		event.preventDefault();
 		sendMessage();
+		
 	}
 });
 

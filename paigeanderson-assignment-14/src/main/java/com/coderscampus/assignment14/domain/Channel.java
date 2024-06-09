@@ -56,12 +56,6 @@ public class Channel {
 		this.messages = messages;
 	}
 
-    @Override
-    public String toString() {
-        return "Channel{" +
-                "channelId=" + channelId +
-                ", channelName='" + channelName + '\'' +
-                '}';
-    }
+   
 	
 }

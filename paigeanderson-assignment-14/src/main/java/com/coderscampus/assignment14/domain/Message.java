@@ -52,11 +52,7 @@ public class Message {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "Message [messageId=" + messageId + ", messageText=" + messageText + 
-				", channel=" + channel + ", user=" + user + "]";
-	}
+	
 	
 	
 	

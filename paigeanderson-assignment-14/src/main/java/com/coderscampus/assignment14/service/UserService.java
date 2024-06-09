@@ -44,14 +44,15 @@ public class UserService {
 		
 	}
 	
+	
 	public void saveUsersToChannel(Channel channel) {
-		findAll().stream()
-				 .forEach(user ->{
-					 user.getChannels().add(channel);
-					 channel.getUsers().add(user);
-					 channelService.save(channel);
-					 userRepo.save(user);
-				 });
+		findAll().stream().forEach(user -> {
+			user.getChannels().add(channel);
+			channel.getUsers().add(user);
+			channelService.save(channel);
+			userRepo.save(user);
+		});
 	}
+	 
 	
 }

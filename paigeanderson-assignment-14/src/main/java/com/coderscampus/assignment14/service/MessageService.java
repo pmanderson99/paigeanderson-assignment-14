@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coderscampus.assignment14.domain.Channel;
+//import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
 //import com.coderscampus.assignment14.domain.User;
 //import com.coderscampus.assignment14.dto.MessageDto;
@@ -29,15 +29,14 @@ public class MessageService {
 		
 	}
 
-	public Message save(Message message, Channel channel) {
-	    channelService.findById(channel.getChannelId());
-		
+	public Message save(Message message) {
 		return messageRepo.save(message);
 	}
 
 	
 	public List<Message> findMessagesByChannelId(Long channelId) {
-        return messageRepo.findByChannelId(channelId);
+		channelService.findById(channelId);
+		return messageRepo.findByChannelId(channelId);
     }
 
 	

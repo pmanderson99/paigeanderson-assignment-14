@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.coderscampus.assignment14.domain.Channel;
+//import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
 //import com.coderscampus.assignment14.domain.User;
 //import com.coderscampus.assignment14.service.ChannelService;
@@ -34,8 +34,8 @@ public class MessageController {
 	
 	@PostMapping("/channels/{channelId}/createMessage")
 	@ResponseBody
-	private Message createMessage(@RequestBody Message message, Channel channel) {
-		messageService.save(message, channel);
+	private Message createMessage(@RequestBody Message message) {
+		messageService.save(message);
 		return message;
 	}
 	
