@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +22,10 @@ public class Channel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long channelId;
 	private String channelName;
-	@ManyToMany(mappedBy = "channels", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "channels")
 	@JsonIgnore
 	private List<User> users = new ArrayList<User>();
-	@OneToMany(mappedBy = "channel", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Message> messages = new ArrayList<Message>();
 	
