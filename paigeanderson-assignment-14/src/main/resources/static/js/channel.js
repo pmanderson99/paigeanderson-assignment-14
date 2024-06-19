@@ -1,15 +1,15 @@
 const messageInput = document.getElementById('message-input');
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
-const channelName = document.getElementById('channel-name').innerText;
+//const channelName = document.getElementById('channel-name').innerText;
 const username = sessionStorage.getItem('username');
-const content = messageInput.value.trim();
+//const content = messageInput.value.trim();
 
 
 
 function sendMessage() {
 	const message = {
-		messageText: content,
+		messageText: messageInput.value,
 		channelId: channelId,
 		userName: username
 	}
@@ -36,7 +36,7 @@ function pollMessages() {
 			message.forEach(message => {
 				const div = document.createElement('div');
 				div.classList.add('message');
-				div.innerHTML = '<b>' + username + '</b>: '+ `${message.messageText}`;
+				div.innerHTML = '<b>' + username + '</b>: '+ message.messageText;
 				messageDiv.appendChild(div);
 			});
 		})
