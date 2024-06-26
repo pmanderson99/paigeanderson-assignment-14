@@ -32,15 +32,15 @@ public class MessageController {
 	
 	/*
 	 * @PostMapping("/channels/{channelId}/createMessage")
-	 * 
-	 * @ResponseBody private Message createMessage(@RequestBody Message message) {
-	 * messageService.save(message); return message; }
+	 * @ResponseBody 
+	 * private Message createMessage(@RequestBody Message message) {
+	 * messageService.save(message); 
+	 * return message; }
 	 */
 	
 	@PostMapping("/channels/{channelId}/createMessage")
 	@ResponseBody
 	private ResponseEntity<Message> createMessage(@RequestBody Message message) {
-		
 		messageService.save(message);
 		return ResponseEntity.status(HttpStatus.CREATED).body(message);
 		//return message;

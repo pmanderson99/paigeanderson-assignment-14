@@ -1,14 +1,13 @@
 const messageInput = document.getElementById('message-input');
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
-//const channelName = document.getElementById('channel-name').innerText;
 const username = sessionStorage.getItem('username');
-//const content = messageInput.value.trim();
 const messageDiv = document.querySelector('.chat-messages');
-let mostRecentMessageId = 0;
+let messageIdCounter = 0;
 console.log(channelId, username);
 
 function sendMessage() {
+	
 	const message = {
 		messageText: messageInput.value,
 		channelId: channelId,
@@ -22,40 +21,53 @@ function sendMessage() {
 		},
 		body: JSON.stringify(message)
 	}).then(response => {
-		//console.log(response)
 		response.json()
 		.then(data => {
 			console.log(data)
-			mostRecentMessageId = data.messageId;
-			console.log(mostRecentMessageId);
+			messageIdCounter = data.messageId;
+			console.log(messageIdCounter);
 		})
-			const div = document.createElement('div');
+		
+			/*const div = document.createElement('div');
 				div.classList.add('message');
 				div.innerHTML = '<b>' + username+ '</b>: '+ message.messageText;
-				messageDiv.appendChild(div);
+				messageDiv.appendChild(div);*/
 	})
 	messageInput.value = '';
+	getMessages();
 	messageInput.focus()
 }
 
-function pollMessages() {
+function getMessages() {
 	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(message => {
+		.then(function(data){
+			appendMessage(data)
+		}) 
 			//const messageDiv = document.querySelector('.chat-messages');
-			messageDiv.innerHTML = '';
+			/*messageDiv.innerHTML = '';
 			message.forEach(message => {
 				const div = document.createElement('div');
 				div.classList.add('message');
 				div.innerHTML = '<b>' + username + '</b>: '+ message.messageText;
-				messageDiv.appendChild(div);
-			});
-		})
+				messageDiv.appendChild(div);*/
+			//});
+		//})
 		//messageId var that changes with polling
-		//var mostRecentMessageId
-		//for each poll, checks to see if mostRecentId is less than largest messageId
+		//var messageIdCounter
+		//for each poll, checks to see if mIdCounter is less than largest messageId
 		//if mostRecentMessageId = largestMessageId then no messages
 
+}
+
+function appendMessage(data){
+	messageDiv.innerHTML= '';
+	for(messageIdCounter; messageIdCounter < data.length; messageIdCounter++){
+		const div = document.createElement('div');
+				div.classList.add('message');
+				div.innerHTML = '<b>' + username+ '</b>: '+ data.messageText;
+				messageDiv.appendChild(div);
+	}
 }
 
 
@@ -68,4 +80,4 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-//setInterval(pollMessages, 500);
+setInterval(getMessages, 500);
