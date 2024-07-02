@@ -65,7 +65,7 @@ function appendMessage(data){
 	for(messageIdCounter; messageIdCounter < data.length; messageIdCounter++){
 		const div = document.createElement('div');
 				div.classList.add('message');
-				div.innerHTML = '<b>' + username+ '</b>: '+ data.messageText;
+				div.innerHTML = '<b>' + username+ '</b>: '+ message.messageText;
 				messageDiv.appendChild(div);
 	}
 }
