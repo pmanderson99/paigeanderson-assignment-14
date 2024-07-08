@@ -1,19 +1,46 @@
 const messageInput = document.getElementById('message-input');
+const chatMessages = document.querySelector('.chat-messages');
+const channelName = document.getElementById("channel-name")
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
-const username = sessionStorage.getItem('username');
-const messageDiv = document.querySelector('.chat-messages');
-let messageIdCounter = 0;
-console.log(channelId, username);
+const username = sessionStorage.getItem('username')
+
+const messages = JSON.parse(localStorage.getItem('messages')) || []
+
+console.log(username)
+console.log(channelId)
+
+setInterval(getMessages, 500)
+
+
+const createChatMessage = (message) => `
+	<div class="message">
+		<div class="message-sender"><b>${message.user}</b>:</div>
+		<div class="message-text">${message.text}</div>
+	</div>
+`
+/*window.onload = () => {
+	messages.forEach((message) => {
+		chatMessages.innerHTML += createChatMessage(message)
+	})
+}*/
+
+
+/*fetch(`/channels/${channelId}/getMessages`)
+	.then(response => response.json())
+	.then(data => {
+		console.log(data)
+});
+*/
 
 function sendMessage() {
-	
-	const message = {
-		messageText: messageInput.value,
-		channelId: channelId,
-		userName: username
-	}
-	console.log('sending msg')
+    
+    const message = {
+        user: username,
+        text: messageInput.value,
+        channelId: channelId,
+    }
+    console.log('sending msg')
 	fetch(`/channels/${channelId}/createMessage`, {
 		method: 'POST',
 		headers: {
@@ -21,54 +48,36 @@ function sendMessage() {
 		},
 		body: JSON.stringify(message)
 	}).then(response => {
-		response.json()
-		.then(data => {
-			console.log(data)
-			messageIdCounter = data.messageId;
-			console.log(messageIdCounter);
-		})
-		
-			/*const div = document.createElement('div');
-				div.classList.add('message');
-				div.innerHTML = '<b>' + username+ '</b>: '+ message.messageText;
-				messageDiv.appendChild(div);*/
+		console.log(response)
+	  })
+
+   	messages.push(message)
+    localStorage.setItem('messages', JSON.stringify(messages))
+
+    chatMessages.innerHTML += createChatMessage(message)
+
+    chatMessages.scrollTop = chatMessages.scrollHeight
+    
+    messageInput.value = '';
+    messageInput.focus()
+}
+
+function getMessages(){
+	fetch(`/channels/${channelId}/getMessages`, {
+		method: "POST",
+		headers: {
+				"Content-Type": "application/json"
+		}
+		}).then(response => response.json())
+		  .then(function (data){ 
+		  window.onload = () => {
+	    	messages.forEach((message) => {
+		    	chatMessages.innerHTML += createChatMessage(message)
+	    	})
+		}	
+		console.log(data)
 	})
-	messageInput.value = '';
-	messageInput.focus()
 }
-
-function getMessages() {
-	fetch(`/channels/${channelId}/getMessages`)
-		.then(response => response.json())
-		.then(data => {
-			const messageDiv = document.querySelector('.chat-messages');
-			messageDiv.innerHTML = '';
-			data.forEach(message => {
-				const div = document.createElement('div');
-				div.classList.add('message');
-				div.innerHTML = '<b>' + username + '</b>: ' + message.messageText
-				messageDiv.appendChild(div);
-			});
-		})
-
-}
-			//const messageDiv = document.querySelector('.chat-messages');
-			/*messageDiv.innerHTML = '';
-			message.forEach(message => {
-				const div = document.createElement('div');
-				div.classList.add('message');
-				div.innerHTML = '<b>' + username + '</b>: '+ message.messageText;
-				messageDiv.appendChild(div);*/
-			//});
-		//})
-		//messageId var that changes with polling
-		//var messageIdCounter
-		//for each poll, checks to see if mIdCounter is less than largest messageId
-		//if mostRecentMessageId = largestMessageId then no messages
-
-
-
-
 
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('message-input').addEventListener('keydown', (event) => {
@@ -79,4 +88,4 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-setInterval(getMessages, 500);
+
