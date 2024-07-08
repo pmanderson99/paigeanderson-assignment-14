@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
-import com.coderscampus.assignment14.domain.User;
+//import com.coderscampus.assignment14.domain.User;
 import com.coderscampus.assignment14.service.ChannelService;
 import com.coderscampus.assignment14.service.UserService;
 import com.coderscampus.assignment14.service.MessageService;
@@ -62,7 +62,6 @@ public class ChannelController {
 	            List<Message> messages = messageService.findMessagesByChannelId(channelId);
 	            model.put("channel", channel);
 	            model.put("messages", messages);
-	            model.put("users", new User());
 	            return "channel";
 	        }
 		}

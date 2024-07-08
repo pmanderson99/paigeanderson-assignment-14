@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.Message;
 import com.coderscampus.assignment14.repository.MessageRepository;
 
@@ -25,6 +24,13 @@ public class MessageService {
 		this.channelService = channelService;
 		
 	}
+	
+	public Message createMessage(String messageText) {
+		Message newMessage = new Message();
+		newMessage.setMessageText(messageText);
+		
+		return messageRepo.save(newMessage);
+	}
 
 	public Message save(Message message) {
 		messageRepo.save(message);
@@ -33,8 +39,8 @@ public class MessageService {
 
 	
 	public List<Message> findMessagesByChannelId(Long channelId) {
-		Channel channel = channelService.findById(channelId);
-		return messageRepo.findByChannelId(channel);
+		channelService.findById(channelId);
+		return messageRepo.findByChannelId(channelId);
     }
 
 	

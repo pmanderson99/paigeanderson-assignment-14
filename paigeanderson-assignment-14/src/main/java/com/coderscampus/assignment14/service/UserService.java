@@ -22,9 +22,10 @@ public class UserService {
 	}
 	
 	public User createUser(String userName) {
-		User user = new User();
-		user.setUserName(userName);
-		return userRepo.save(user);
+		User newUser = new User();
+		newUser.setUserName(userName);
+		
+		return userRepo.save(newUser);
 	}
 	
 	public User saveUser(User user) {

@@ -34,16 +34,24 @@ function sendMessage() {
 				messageDiv.appendChild(div);*/
 	})
 	messageInput.value = '';
-	getMessages();
 	messageInput.focus()
 }
 
 function getMessages() {
 	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(function(data){
-			appendMessage(data)
-		}) 
+		.then(data => {
+			const messageDiv = document.querySelector('.chat-messages');
+			messageDiv.innerHTML = '';
+			data.forEach(message => {
+				const div = document.createElement('div');
+				div.classList.add('message');
+				div.innerHTML = '<b>' + username + '</b>: ' + message.messageText
+				messageDiv.appendChild(div);
+			});
+		})
+
+}
 			//const messageDiv = document.querySelector('.chat-messages');
 			/*messageDiv.innerHTML = '';
 			message.forEach(message => {
@@ -58,17 +66,8 @@ function getMessages() {
 		//for each poll, checks to see if mIdCounter is less than largest messageId
 		//if mostRecentMessageId = largestMessageId then no messages
 
-}
 
-function appendMessage(data){
-	messageDiv.innerHTML= '';
-	for(messageIdCounter; messageIdCounter < data.length; messageIdCounter++){
-		const div = document.createElement('div');
-				div.classList.add('message');
-				div.innerHTML = '<b>' + username+ '</b>: '+ message.messageText;
-				messageDiv.appendChild(div);
-	}
-}
+
 
 
 document.getElementById('send-button').addEventListener('click', sendMessage);
