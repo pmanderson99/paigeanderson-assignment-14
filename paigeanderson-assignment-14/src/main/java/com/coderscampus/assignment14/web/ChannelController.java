@@ -8,27 +8,20 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coderscampus.assignment14.domain.Channel;
-import com.coderscampus.assignment14.domain.Message;
-//import com.coderscampus.assignment14.domain.User;
 import com.coderscampus.assignment14.service.ChannelService;
-import com.coderscampus.assignment14.service.UserService;
-import com.coderscampus.assignment14.service.MessageService;
 
 @Controller
 public class ChannelController {
 	
 	 private final ChannelService channelService;
-	 private final UserService userService;
-	 private final MessageService messageService;
+	
 	    
 	    @Autowired
-	    public ChannelController(ChannelService channelService, UserService userService, MessageService messageService) {
+	    public ChannelController(ChannelService channelService) {
 	        this.channelService = channelService;
-	        this.userService = userService;
-	        this.messageService = messageService;
+	        
 	    }
 
 	    @GetMapping("/")
@@ -49,7 +42,6 @@ public class ChannelController {
 	    @PostMapping("/welcome/createChannel")
 		public String createNewChannel(Channel channel) {
 			channelService.save(channel);
-			userService.saveUsersToChannel(channel);
 			return "redirect:/welcome";
 		}
 	    
@@ -59,9 +51,7 @@ public class ChannelController {
 	            return "redirect:/welcome";
 	        } else {
 	            Channel channel = channelService.findById(channelId);
-	            List<Message> messages = messageService.findMessagesByChannelId(channelId);
 	            model.put("channel", channel);
-	            model.put("messages", messages);
 	            return "channel";
 	        }
 		}

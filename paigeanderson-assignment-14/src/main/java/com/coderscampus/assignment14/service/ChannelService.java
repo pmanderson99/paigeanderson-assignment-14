@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderscampus.assignment14.domain.Channel;
-//import com.coderscampus.assignment14.domain.Message;
 import com.coderscampus.assignment14.repository.ChannelRepository;
 
 @Service

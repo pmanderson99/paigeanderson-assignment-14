@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coderscampus.assignment14.domain.Channel;
 import com.coderscampus.assignment14.domain.User;
 import com.coderscampus.assignment14.repository.UserRepository;
 
@@ -13,12 +12,11 @@ import com.coderscampus.assignment14.repository.UserRepository;
 public class UserService {
 	
 	private final UserRepository userRepo;
-	private final ChannelService channelService;
+	
 	
 	@Autowired
-	public UserService(UserRepository userRepo, ChannelService channelService) {
+	public UserService(UserRepository userRepo) {
 		this.userRepo = userRepo;
-		this.channelService = channelService;
 	}
 	
 	public User createUser(String userName) {
@@ -45,15 +43,5 @@ public class UserService {
 		
 	}
 	
-	
-	public void saveUsersToChannel(Channel channel) {
-		findAll().stream().forEach(user -> {
-			user.getChannels().add(channel);
-			channel.getUsers().add(user);
-			channelService.save(channel);
-			userRepo.save(user);
-		});
-	}
-	 
 	
 }
