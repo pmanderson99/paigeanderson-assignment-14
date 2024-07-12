@@ -57,8 +57,7 @@ function sendMessage() {
     chatMessages.innerHTML += createChatMessage(message)
 
     chatMessages.scrollTop = chatMessages.scrollHeight
-    
-    messageInput.value = '';
+   
     messageInput.focus()
 }
 
