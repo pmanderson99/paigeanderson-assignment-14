@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MessageDTO {
 	
-	@JsonProperty("username")
+	@JsonProperty("userName")
 	private String userName;
 	@JsonProperty("messageText")
 	private String messageText;

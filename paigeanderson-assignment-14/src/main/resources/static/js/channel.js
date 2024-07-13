@@ -1,9 +1,10 @@
 const messageInput = document.getElementById('message-input');
-const messageDiv = document.querySelector('.chat-messages');
+const chatMessages = document.querySelector('.chat-messages');
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
 const user = JSON.parse(sessionStorage.getItem('username'));
 
+const messages = JSON.parse(localStorage.getItem('messages')) || [];
 
 console.log(user, channelId);
 
@@ -15,7 +16,9 @@ function sendMessage() {
 		channelId: channelId,
 		userId: user.userId
 	}
+	messageInput.value = '';
 	console.log('sending msg')
+	
 	fetch(`/channels/{channelId}/createMessage`, {
 		method: 'POST',
 		headers: {
@@ -29,27 +32,27 @@ function sendMessage() {
 			
 		})
 	})
-	messageInput.value = '';
+	
+	messages.push(message)
+	//chatMessages.innerHTML += createChatMessageElement(message)
 	messageInput.focus()
+	
 }
 
-function pollMessages() {
-	fetch(`/channels/{channelId}/getMessages`)
-		.then(response => response.json())
-		.then(data => {
-			const messageDiv = document.querySelector('.chat-messages');
-			messageDiv.innerHTML = '';
-			data.forEach(message => {
-				const div = document.createElement('div');
-				div.classList.add('message');
-				div.innerHTML = '<b>' + username + '</b>: ' + message.messageText
-				messageDiv.appendChild(div);
-			});
-		})
-
+//this is good here
+const createChatMessageElement = (message) => `
+	<div class="message"> <b>${message.userName}</b>: ${message.messageText}</div>
+`
+//fix this 
+function getMessages(){
+	fetch(`channels/{channelId}/getMessages`
+	 ).then((response) => response.json()
+	  .then(message => {
+		createChatMessageElement(message)
+	  }))
 }
 
-
+//also ok
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('message-input').addEventListener('keydown', (event) => {
 	if (event.key === 'Enter') {
@@ -58,6 +61,4 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-//setInterval(pollMessages, 500);
-
-
+setInterval(getMessages, 500);
