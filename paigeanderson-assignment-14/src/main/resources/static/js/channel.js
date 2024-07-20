@@ -19,7 +19,7 @@ function sendMessage() {
 	messageInput.value = '';
 	console.log('sending msg')
 	
-	fetch(`/channels/{channelId}/createMessage`, {
+	fetch(`/channels/${channelId}/createMessage`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/JSON'
@@ -32,25 +32,24 @@ function sendMessage() {
 			
 		})
 	})
-	
 	messages.push(message)
 	//chatMessages.innerHTML += createChatMessageElement(message)
 	messageInput.focus()
 	
 }
 
+//this is ok just gotta figure out why user is null for the controller probs a service issue
+function getMessages() {
+	fetch(`/channels/${channelId}/getMessages`)
+		.then(response => response.json())
+		.then(message => createChatMessageElement(message));
+}
+
 //this is good here
 const createChatMessageElement = (message) => `
 	<div class="message"> <b>${message.userName}</b>: ${message.messageText}</div>
 `
-//fix this 
-function getMessages(){
-	fetch(`channels/{channelId}/getMessages`
-	 ).then((response) => response.json()
-	  .then(message => {
-		createChatMessageElement(message)
-	  }))
-}
+
 
 //also ok
 document.getElementById('send-button').addEventListener('click', sendMessage);
