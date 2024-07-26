@@ -20,10 +20,10 @@ public class UserService {
 	}
 	
 	public User createUser(String userName) {
-		User newUser = new User();
-		newUser.setUserName(userName);
+		User user = new User();
+		user.setUserName(userName);
 		
-		return userRepo.save(newUser);
+		return userRepo.save(user);
 	}
 	
 	public User saveUser(User user) {
@@ -34,9 +34,15 @@ public class UserService {
 		return userRepo.findById(userId).orElse(null);
 	}
 	
-	public User findByUserName(String userName) {
-		return userRepo.findByUserName(userName);
+	public String findNameById(Long userId) {
+		User user = userRepo.findById(userId).orElse(null);
+		return user.getUserName();
 	}
+	
+	/*
+	 * public User findByUserName(String userName) { return
+	 * userRepo.findByUserName(userName); }
+	 */
 	
 	public List<User> findAll(){
 		return userRepo.findAll();

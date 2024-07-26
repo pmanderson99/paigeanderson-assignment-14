@@ -34,12 +34,12 @@ public class MessageService {
 	public void createMessage(MessageDTO message) {
 		Channel channel = channelService.findById(message.getChannelId());
 		Message newMessage = new Message();
-		User user = new User();
-		user = userService.findById(message.getUserId());
+		User user = userService.findById(message.getUserId());
 		newMessage.setUser(user);
 		newMessage.setMessageText(message.getMessageText());
 		newMessage.setChannel(channel);
 		messageRepo.save(newMessage);
+		
 	}
 	
 	public List<MessageDTO> findMessagesByChannelId(Long channelId) {
@@ -47,7 +47,7 @@ public class MessageService {
 		List<MessageDTO> newMessages = new ArrayList<MessageDTO>();
 		for(Message message : messageList) {
 			MessageDTO messageDto = new MessageDTO();
-			messageDto.setUserName(message.getUser().getUserName());
+			messageDto.setUserName(userService.findNameById(message.getUser().getUserId()));
 			messageDto.setMessageText(message.getMessageText());
 			messageDto.setChannelId(message.getChannel().getChannelId());
 			messageDto.setUserId(message.getUser().getUserId());

@@ -4,7 +4,7 @@ const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
 const user = JSON.parse(sessionStorage.getItem('username'));
 
-const messages = JSON.parse(localStorage.getItem('messages')) || [];
+const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
 
 console.log(user, channelId);
 
@@ -25,13 +25,13 @@ function sendMessage() {
 			'Content-Type': 'application/JSON'
 		},
 		body: JSON.stringify(message)
-	}).then(response => {
-		response.json()
+	}).then(response => 
+		response.json())
 		.then(data => {
 			console.log(data)
 			
-		})
-	})
+		}).then( () => getMessages())
+	
 	messages.push(message)
 	//chatMessages.innerHTML += createChatMessageElement(message)
 	messageInput.focus()
@@ -42,7 +42,7 @@ function sendMessage() {
 function getMessages() {
 	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(message => createChatMessageElement(message));
+		.then(data => createChatMessageElement(data));
 }
 
 //this is good here
@@ -60,4 +60,4 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-setInterval(getMessages, 500);
+//setInterval(getMessages, 500);
