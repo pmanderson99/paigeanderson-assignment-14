@@ -3,14 +3,14 @@
 <head>
 <title>[[${channel.channelName}]]</title>
 <link rel="stylesheet" href="/css/channel.css">
-<script>
+<!-- <script>
 			document.addEventListener("DOMContentLoaded", ()  => {
- 				var username = sessionStorage.getItem('username')
+ 				let username = sessionStorage.getItem('username')
  				if (username === null) {
  					window.location.href = '/welcome'
  				}
  			})
-</script>
+</script> -->
 </head>
 <body>
 	<h1 th:text="${channel.channelName}" id="channel-name"></h1>

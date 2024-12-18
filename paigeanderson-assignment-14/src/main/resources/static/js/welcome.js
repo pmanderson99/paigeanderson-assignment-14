@@ -23,3 +23,5 @@ if (user === null) {
 } else {
 	user = JSON.parse(sessionStorage.getItem('username'));
 }
+
+

@@ -42,7 +42,7 @@ function sendMessage() {
 function getMessages() {
 	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(data => createChatMessageElement(data));
+		.then(message => createChatMessageElement(message));
 }
 
 //this is good here
@@ -60,4 +60,4 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-//setInterval(getMessages, 500);
+setInterval(getMessages, 500);
