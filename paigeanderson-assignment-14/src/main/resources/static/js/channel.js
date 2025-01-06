@@ -8,7 +8,13 @@ const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
 
 console.log(user, channelId);
 
-//the sendMessage function is good now!! just gotta figure out how to render
+
+//this is good here
+const createChatMessageElement = (message) => `
+	<div class="message"> <b>${message.userName}</b>: ${message.messageText}</div>
+`
+
+//the sendMessage function is good now!! rendering now yayyyy
 function sendMessage() {
 	const message = {
 		userName: user.userName,
@@ -33,22 +39,22 @@ function sendMessage() {
 		}).then( () => getMessages())
 	
 	messages.push(message)
-	//chatMessages.innerHTML += createChatMessageElement(message)
+	chatMessages.innerHTML += createChatMessageElement(message)
+	
 	messageInput.focus()
 	
 }
 
 //this is ok just gotta figure out why user is null for the controller probs a service issue
+//as of 12/18/24 maybe this isn't even being used? looks like its just creating a chat element.. 
+//and then not storing the message hhhh
 function getMessages() {
 	fetch(`/channels/${channelId}/getMessages`)
 		.then(response => response.json())
-		.then(message => createChatMessageElement(message));
+		.then(message => createChatMessageElement(message))
+		localStorage.setItem('messages', JSON.stringify(messages))
 }
 
-//this is good here
-const createChatMessageElement = (message) => `
-	<div class="message"> <b>${message.userName}</b>: ${message.messageText}</div>
-`
 
 
 //also ok
@@ -60,4 +66,5 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
 	}
 });
 
-setInterval(getMessages, 500);
+//doesn't show other messages from different tabs or whatever when in use
+//setInterval(getMessages, 500);
