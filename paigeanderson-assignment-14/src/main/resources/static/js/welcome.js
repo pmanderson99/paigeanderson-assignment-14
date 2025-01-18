@@ -1,11 +1,8 @@
-// need to figure out why new users are generated everytime you go back to the welcome page
-//ok thisparts fine the other one i deleted as of 1/15 makes u do that ^
-//at this checkpoint kinda just married the two different ways --1/15 but ye this is good now
 let user = sessionStorage.getItem('user')
 
 function setUsername() {
-	const usernameInput = document.getElementById('username');
-	const username = usernameInput.value;
+	
+	const username = document.getElementById('username');
 
 	if (username.trim() !== '') {
 		sessionStorage.setItem('username', username);
