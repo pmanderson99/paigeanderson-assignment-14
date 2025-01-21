@@ -3,8 +3,14 @@ const chatMessages = document.querySelector('.chat-messages');
 const queryString = window.location.href;
 const channelId = queryString.substring(queryString.lastIndexOf("/") + 1, queryString.length);
 const user = sessionStorage.getItem('username');
+const userId = sessionStorage.getItem('userId');
 
+const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
+
+
+console.log("userId of user on channel: " + userId);
 console.log(user, channelId);
+
 
 document.addEventListener('DOMContentLoaded', () => {
 	getMessages();
@@ -18,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function sendMessage() {
 	const message = {
-		userName: user.username,
+		userName: user.userName,
 		messageText: messageInput.value,
 		channelId: channelId,
 		userId: user.userId
@@ -36,7 +42,8 @@ function sendMessage() {
 			response.json())
 			.then(data =>{
 				console.log(data)
-			})//.then( () => getMessages());
+			})
+	messages.push(message)
 	chatMessages.innerHTML += createMessageElement(message)	
 	messageInput.focus()	
 }
@@ -54,6 +61,7 @@ function getMessages() {
 			createMessageElement(newMessages);
 			
 			localStorage.setItem('messages', JSON.stringify(newMessages));
+			
 		})
 }
 

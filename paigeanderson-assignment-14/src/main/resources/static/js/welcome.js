@@ -1,4 +1,5 @@
-let user = sessionStorage.getItem('user')
+//let user = sessionStorage.getItem('user');
+//let userId = sessionStorage.getItem('userId');
 
 function setUsername() {
 	
@@ -17,7 +18,9 @@ function setUsername() {
 	})
 		.then(response => response.json())
 		.then(user => {
-			console.log(user)
+			userId = user.userId;
+			username = user.username;
+			sessionStorage.setItem('userId', userId);
 			sessionStorage.setItem('username', JSON.stringify(user))
 		})
 
@@ -35,8 +38,11 @@ function promptForUsername() {
 		} else {
 			sessionStorage.setItem('username', username);
 		}
+	} else {
+		//user = JSON.parse(sessionStorage.getItem('username'));
 	}
 }
 
 
 promptForUsername();
+//console.log(userId, user);
