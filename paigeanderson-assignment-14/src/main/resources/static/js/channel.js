@@ -43,7 +43,7 @@ function sendMessage() {
 			.then(data =>{
 				console.log(data)
 			})
-	messages.push(message)
+	messages.push(message);
 	chatMessages.innerHTML += createMessageElement(message)	
 	messageInput.focus()	
 }
@@ -61,7 +61,7 @@ function getMessages() {
 			createMessageElement(newMessages);
 			
 			localStorage.setItem('messages', JSON.stringify(newMessages));
-			
+			sentMessages.push(messages);
 		})
 }
 

@@ -38,11 +38,10 @@ public class UserService {
 		User user = userRepo.findById(userId).orElse(null);
 		return user.getUserName();
 	}
-	
-	/*
-	 * public User findByUserName(String userName) { return
-	 * userRepo.findByUserName(userName); }
-	 */
+
+	public User findByUserName(String userName) {
+		return userRepo.findByUserName(userName);
+	}
 	
 	public List<User> findAll(){
 		return userRepo.findAll();

@@ -30,9 +30,9 @@ public class MessageController {
 	
 	@PostMapping("/channels/{channelId}/createMessage")
 	@ResponseBody
-	public MessageDTO createMessage(@RequestBody MessageDTO message) {
+	public void createMessage(@RequestBody MessageDTO message) {
 		messageService.createMessage(message);
-		return message;
+	
 	}
 	
 	@GetMapping("/channels/{channelId}/getMessages")
