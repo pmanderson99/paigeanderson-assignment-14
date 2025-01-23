@@ -9,7 +9,7 @@ const messages = JSON.parse(sessionStorage.getItem('messages')) || [];
 
 
 console.log("userId of user on channel: " + userId);
-console.log(user, channelId);
+console.log(user, "channelId: " + channelId);
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,7 +67,7 @@ function getMessages() {
 
 const createMessageElement = (message) => `
 	<div class="message"> <b>${message.userName}</b>: ${message.messageText}</div>
-`
+`;
 
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('message-input').addEventListener('keydown', (event) => {

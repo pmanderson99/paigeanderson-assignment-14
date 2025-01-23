@@ -1,12 +1,27 @@
+function promptForUsername() {
+	var username = sessionStorage.getItem('username');
+
+	if (username == null || username.trim() === '') {
+		username = prompt('enter your username');
+
+		if (username == null || username.trim() === '') {
+			promptForUsername();
+		} else {
+			sessionStorage.setItem('username', username);
+		}
+	}
+}
+
 let user = sessionStorage.getItem('user')
 
-if (user === null) {
+function setUsername() {
+	
+	const username = document.getElementById('username');
 
-	let username = prompt('Welcome, enter your name', 'Guest')
-	while (username === null || username === '') {
-		username = prompt('username required', 'Guest')
-	}
-
+	if (username.trim() !== '') {
+		sessionStorage.setItem('username', username);
+		window.location.href = '/channels'
+	
 	fetch(`/welcome/createUser`, {
 		method: 'POST',
 		headers: {
@@ -17,9 +32,13 @@ if (user === null) {
 		.then(response => response.json())
 		.then(user => {
 			console.log(user)
-			sessionStorage.setItem('username', username)
+			sessionStorage.setItem('username', JSON.stringify(user))
 		})
-
-} else {
-	user = JSON.parse(sessionStorage.getItem('username'));
+	
+	} else {
+		user = JSON.parse(sessionStorage.getItem(user))
+	}
 }
+
+
+promptForUsername();
